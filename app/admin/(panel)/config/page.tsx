@@ -1,6 +1,7 @@
 import { requireAdmin } from '@/lib/supabase/server'
 import { getBaseUrl } from '@/lib/url'
 import { MasterPasswordForm } from './MasterPasswordForm'
+import { ChangePasswordForm } from './ChangePasswordForm'
 
 export const metadata = { title: 'Configurações' }
 
@@ -17,6 +18,10 @@ export default async function ConfigPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-5">
       <h1 className="text-xl font-bold">Configurações</h1>
+      <section className="card space-y-3">
+        <h2 className="font-semibold">Minha senha de acesso ao painel</h2>
+        <ChangePasswordForm />
+      </section>
       <section className="card space-y-3">
         <h2 className="font-semibold">Senha mestre do vendedor</h2>
         <p className="text-sm text-zinc-600">
