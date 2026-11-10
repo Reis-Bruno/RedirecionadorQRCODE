@@ -5,6 +5,7 @@ Os arquivos reais saem do painel: **Admin › Lotes › 🎨 Arte para gráfica*
 
 | Modelo | Tamanho final | Arquivo enviado |
 |---|---|---|
+| **Display Premium A6** (NFC + QR + rodapé) | 100 × 150 mm | 106 × 156 mm (com sangria) |
 | Display de mesa A6 | 100 × 150 mm | 106 × 156 mm (com sangria) |
 | Placa quadrada | 150 × 150 mm | 156 × 156 mm |
 | Adesivo redondo | Ø 80 mm | 86 × 86 mm + página de faca |
@@ -13,4 +14,5 @@ Os arquivos reais saem do painel: **Admin › Lotes › 🎨 Arte para gráfica*
 
 Especificação técnica (verificada): PDF vetorial, 100% CMYK (sem RGB), fontes Montserrat embutidas (licença OFL, `assets/fonts/OFL.txt`),
 sangria 3 mm, TrimBox/BleedBox definidos, QR com correção de erro nível M e zona de silêncio.
+Sem logotipos de terceiros (marca “G” do Google, ícones do Instagram/WhatsApp): o nome aparece só como texto descritivo, para não infringir marca registrada.
 `*_REVISAO-com-guias.pdf` mostra linha de corte (ciano) e área de segurança (magenta) — só para conferência.

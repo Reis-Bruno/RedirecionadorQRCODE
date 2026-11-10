@@ -5,7 +5,7 @@ export function ArtForm({ batch }: { batch: string }) {
     <form action={`/admin/arte/${encodeURIComponent(batch)}`} target="_blank" className="space-y-2 rounded-xl bg-zinc-50 p-3">
       <p className="text-xs font-semibold text-zinc-700">🎨 Arte para gráfica (PDF vetorial CMYK, 1 página por placa)</p>
       <div className="grid gap-2 sm:grid-cols-2">
-        <select name="modelo" className="input py-2 text-sm" defaultValue="display-a6">
+        <select name="modelo" className="input py-2 text-sm" defaultValue="display-premium">
           {Object.entries(MODELOS).map(([k, m]) => (
             <option key={k} value={k}>{m.nome}</option>
           ))}

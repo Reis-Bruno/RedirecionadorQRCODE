@@ -9,6 +9,7 @@ const BLEED = 3 // mm de sangria
 const MARK_AREA = 10 // mm extras em volta quando há marcas de corte
 
 export const MODELOS = {
+  'display-premium': { nome: 'Display Premium A6 (NFC + QR, rodapé)', w: 100, h: 150, safe: 4, uso: 'Acrílico de mesa em L ou T (10×15 cm), impressão UV ou couché 300g atrás do acrílico' },
   'display-a6': { nome: 'Display de mesa A6 (10×15 cm)', w: 100, h: 150, safe: 4, uso: 'Acrílico de mesa/balcão, papel couché 300g ou PVC 0,3mm' },
   'placa-15': { nome: 'Placa quadrada 15×15 cm', w: 150, h: 150, safe: 5, uso: 'PVC expandido 2–3mm, ACM ou acrílico; parede ou balcão' },
   'adesivo-80': { nome: 'Adesivo redondo Ø8 cm', w: 80, h: 80, safe: 3, uso: 'Vinil adesivo com corte especial (faca na última página)' },
@@ -24,11 +25,11 @@ const YELLOW = cmyk(0, 0.25, 1, 0)
 const REG = cmyk(1, 1, 1, 1)
 
 export const TEMAS = {
-  google: { nome: 'Avaliação Google', cor: cmyk(0.88, 0.5, 0, 0), kicker: 'Gostou do atendimento?', titulo: 'Avalie a gente no Google', curto: 'AVALIE NO GOOGLE', cta: 'Leva só 10 segundos', estrelas: true },
-  instagram: { nome: 'Instagram', cor: cmyk(0.12, 0.9, 0.1, 0), kicker: 'Curtiu? Acompanhe!', titulo: 'Siga a gente no Instagram', curto: 'SIGA NO INSTAGRAM', cta: 'Novidades e promoções', estrelas: false },
-  whatsapp: { nome: 'WhatsApp', cor: cmyk(0.78, 0, 0.88, 0.05), kicker: 'Pedidos e dúvidas', titulo: 'Chama a gente no WhatsApp', curto: 'FALE NO WHATSAPP', cta: 'Atendimento rápido', estrelas: false },
-  wifi: { nome: 'Wi-Fi', cor: cmyk(0.92, 0.72, 0.15, 0.3), kicker: 'Wi-Fi grátis', titulo: 'Conecte-se ao nosso Wi-Fi', curto: 'WI-FI GRÁTIS', cta: 'Rede e senha na tela do celular', estrelas: false },
-  cardapio: { nome: 'Cardápio / link', cor: cmyk(0, 0.68, 0.95, 0.04), kicker: 'Cardápio digital', titulo: 'Veja nosso cardápio aqui', curto: 'CARDÁPIO DIGITAL', cta: 'Sempre atualizado', estrelas: false },
+  google: { nome: 'Avaliação Google', cor: cmyk(0.88, 0.5, 0, 0), kicker: 'Gostou do atendimento?', titulo: 'Avalie a gente no Google', curto: 'AVALIE NO GOOGLE', cta: 'Leva só 10 segundos', estrelas: true, l1: 'Avalie nossa empresa', pre: 'no', marca: 'Google', qrSub: 'para avaliar', escuro: cmyk(1, 0.72, 0, 0.12), rodape: [['É RÁPIDO', 'E SEGURO'], ['AVALIE NO', 'GOOGLE'], ['SUA AVALIAÇÃO', 'AJUDA MUITO!']] },
+  instagram: { nome: 'Instagram', cor: cmyk(0.12, 0.9, 0.1, 0), kicker: 'Curtiu? Acompanhe!', titulo: 'Siga a gente no Instagram', curto: 'SIGA NO INSTAGRAM', cta: 'Novidades e promoções', estrelas: false, l1: 'Siga nossa empresa', pre: 'no', marca: 'Instagram', qrSub: 'para seguir', escuro: cmyk(0.35, 1, 0.2, 0.15), rodape: [['É RÁPIDO', 'E GRÁTIS'], ['SIGA NO', 'INSTAGRAM'], ['NOVIDADES', 'TODA SEMANA']] },
+  whatsapp: { nome: 'WhatsApp', cor: cmyk(0.78, 0, 0.88, 0.05), kicker: 'Pedidos e dúvidas', titulo: 'Chama a gente no WhatsApp', curto: 'FALE NO WHATSAPP', cta: 'Atendimento rápido', estrelas: false, l1: 'Fale com a gente', pre: 'pelo', marca: 'WhatsApp', qrSub: 'para conversar', escuro: cmyk(0.85, 0.2, 0.95, 0.25), rodape: [['RESPOSTA', 'RÁPIDA'], ['FALE NO', 'WHATSAPP'], ['PEDIDOS E', 'DÚVIDAS']] },
+  wifi: { nome: 'Wi-Fi', cor: cmyk(0.92, 0.72, 0.15, 0.3), kicker: 'Wi-Fi grátis', titulo: 'Conecte-se ao nosso Wi-Fi', curto: 'WI-FI GRÁTIS', cta: 'Rede e senha na tela do celular', estrelas: false, l1: 'Conecte-se ao', pre: 'nosso', marca: 'Wi-Fi', qrSub: 'para conectar', escuro: cmyk(0.95, 0.8, 0.2, 0.45), rodape: [['CONEXÃO', 'RÁPIDA'], ['WI-FI', 'GRÁTIS'], ['REDE E SENHA', 'NA TELA']] },
+  cardapio: { nome: 'Cardápio / link', cor: cmyk(0, 0.68, 0.95, 0.04), kicker: 'Cardápio digital', titulo: 'Veja nosso cardápio aqui', curto: 'CARDÁPIO DIGITAL', cta: 'Sempre atualizado', estrelas: false, l1: 'Confira o nosso', pre: '', marca: 'Cardápio', qrSub: 'para abrir', escuro: cmyk(0.1, 0.8, 1, 0.25), rodape: [['SEMPRE', 'ATUALIZADO'], ['CARDÁPIO', 'DIGITAL'], ['ESCOLHA', 'SEM PRESSA']] },
 } as const
 export type Tema = keyof typeof TEMAS
 
@@ -80,7 +81,7 @@ class Ctx {
   }
   strokeRect(x: number, y: number, w: number, h: number, color: Color, widthMm: number, r = 0) {
     const d = `M${r},0 H${w - r} A${r},${r} 0 0 1 ${w},${r} V${h - r} A${r},${r} 0 0 1 ${w - r},${h} H${r} A${r},${r} 0 0 1 0,${h - r} V${r} A${r},${r} 0 0 1 ${r},0 Z`
-    this.page.drawSvgPath(d, { x: this.X(x), y: this.Y(y), scale: MM, borderColor: color, borderWidth: widthMm * MM })
+    this.page.drawSvgPath(d, { x: this.X(x), y: this.Y(y), scale: MM, borderColor: color, borderWidth: widthMm })
   }
   circle(cx: number, cy: number, r: number, color: Color) {
     this.page.drawEllipse({ x: this.X(cx), y: this.Y(cy), xScale: r * MM, yScale: r * MM, color, borderWidth: 0 })
@@ -172,6 +173,30 @@ class Ctx {
     }
     this.page.drawSvgPath(d, { x: this.X(0), y: this.Y(0), scale: MM, color, borderWidth: 0 })
   }
+  /** Path em coordenadas locais (mm) com origem em (cx, cy). */
+  fillAt(d: string, cx: number, cy: number, color: Color) {
+    this.page.drawSvgPath(d, { x: this.X(cx), y: this.Y(cy), scale: MM, color, borderWidth: 0 })
+  }
+  strokeAt(d: string, cx: number, cy: number, color: Color, widthMm: number) {
+    this.page.drawSvgPath(d, { x: this.X(cx), y: this.Y(cy), scale: MM, borderColor: color, borderWidth: widthMm, borderLineCap: 1 })
+  }
+  /** Setor de anel (preenchido) entre r1 e r2, ângulos em graus (0 = direita, sentido horário). */
+  ringSegment(cx: number, cy: number, r1: number, r2: number, a1: number, a2: number, color: Color) {
+    const rad = (g: number) => (g * Math.PI) / 180
+    const p = (r: number, g: number) => `${(r * Math.cos(rad(g))).toFixed(3)},${(r * Math.sin(rad(g))).toFixed(3)}`
+    const large = a2 - a1 > 180 ? 1 : 0
+    const d = `M${p(r2, a1)} A${r2},${r2} 0 ${large} 1 ${p(r2, a2)} L${p(r1, a2)} A${r1},${r1} 0 ${large} 0 ${p(r1, a1)} Z`
+    this.fillAt(d, cx, cy, color)
+  }
+  /** Arco aberto (traço), ângulos em graus. */
+  arc(cx: number, cy: number, r: number, a1: number, a2: number, color: Color, widthMm: number) {
+    const rad = (g: number) => (g * Math.PI) / 180
+    const p = (g: number) => `${(r * Math.cos(rad(g))).toFixed(3)},${(r * Math.sin(rad(g))).toFixed(3)}`
+    this.strokeAt(`M${p(a1)} A${r},${r} 0 0 1 ${p(a2)}`, cx, cy, color, widthMm)
+  }
+  line(x1: number, y1: number, x2: number, y2: number, color: Color, widthMm: number) {
+    this.page.drawLine({ start: { x: this.X(x1), y: this.Y(y1) }, end: { x: this.X(x2), y: this.Y(y2) }, thickness: widthMm * MM, color, lineCap: 1 })
+  }
   /** Fundo sangrando (cobre área de corte + sangria). */
   bleedFill(color: Color) {
     this.rect(-BLEED, -BLEED, this.w + 2 * BLEED, this.h + 2 * BLEED, color)
@@ -252,7 +277,7 @@ function displayA6(c: Ctx, t: ArtTag, o: ArtOptions) {
   if (T.estrelas) c.stars(w / 2, 53, 4.3, 11)
   else c.text(T.cta, w / 2, 55, { font: c.f.semibold, size: 10, color: T.cor, align: 'center' })
 
-  c.strokeRect(19, 62, 62, 62, T.cor, 0.9, 4)
+  c.strokeRect(19, 62, 62, 62, T.cor, 2.5, 4)
   c.qr(tagUrl(o.baseUrl, t.slug), 23, 66, 54)
 
   c.text('Aponte a câmera do celular', w / 2, 131, { font: c.f.semibold, size: 9.5, color: K, align: 'center' })
@@ -272,7 +297,7 @@ function placa15(c: Ctx, t: ArtTag, o: ArtOptions) {
   c.text(T.kicker, w / 2, 14, { font: c.f.semibold, size: 15, color: WHITE, align: 'center' })
   c.text(T.titulo, w / 2, 29, { font: c.f.extrabold, size: c.fit(T.titulo, c.f.extrabold, 26, w - 16), color: WHITE, align: 'center' })
 
-  c.strokeRect(38, 45, 74, 74, T.cor, 1.1, 5)
+  c.strokeRect(38, 45, 74, 74, T.cor, 3, 5)
   c.qr(tagUrl(o.baseUrl, t.slug), 42, 49, 66)
 
   if (T.estrelas) c.stars(w / 2, 127.5, 4.5, 12)
@@ -358,7 +383,99 @@ function cartaoPin(c: Ctx, t: ArtTag, o: ArtOptions) {
   c.text(t.slug, c.w - 5, 50.5, { font: c.f.regular, size: 4.2, color: GRAY, align: 'right' })
 }
 
+// ---- Display Premium: estrelas + chamada + círculo NFC com anel colorido + QR com cantoneiras + rodapé em onda
+const RING = [cmyk(0.85, 0.45, 0, 0), cmyk(0, 0.85, 0.8, 0), cmyk(0, 0.25, 1, 0), cmyk(0.8, 0, 0.9, 0)]
+const PALE = cmyk(0.07, 0.015, 0, 0)
+const LIGHT_LINE = cmyk(0.35, 0.12, 0, 0)
+
+function displayPremium(c: Ctx, t: ArtTag, o: ArtOptions) {
+  const T = TEMAS[o.tema]
+  const { w } = c
+  const blue = T.cor
+
+  // topo
+  if (T.estrelas) c.stars(w / 2, 14, 4.4, 10.5)
+  else {
+    const k = T.kicker.toUpperCase()
+    const kw = c.width(k, c.f.extrabold, 7) + 8
+    c.rect(w / 2 - kw / 2, 9, kw, 7, blue, 3.5)
+    c.text(k, w / 2, 14, { font: c.f.extrabold, size: 7, color: WHITE, align: 'center' })
+  }
+  c.text(T.l1, w / 2, 31, { font: c.f.extrabold, size: c.fit(T.l1, c.f.extrabold, 19, w - 12), color: K, align: 'center' })
+  const pre = T.pre ? T.pre + ' ' : ''
+  let s2 = 25
+  while (s2 > 12 && c.width(pre + T.marca, c.f.extrabold, s2) > w - 12) s2 -= 0.5
+  const tw = c.width(pre + T.marca, c.f.extrabold, s2)
+  const x0 = w / 2 - tw / 2
+  if (pre) c.text(pre, x0, 43, { font: c.f.extrabold, size: s2, color: K })
+  c.text(T.marca, x0 + c.width(pre, c.f.extrabold, s2), 43, { font: c.f.extrabold, size: s2, color: blue })
+
+  // círculo NFC
+  const cx = 28.5
+  const cy = 74
+  const gap = 4
+  RING.forEach((col, i) => c.ringSegment(cx, cy, 18.6, 21.4, -90 + i * 90 + gap / 2, -90 + (i + 1) * 90 - gap / 2, col))
+  c.circle(cx, cy, 18, PALE)
+  // celular
+  c.strokeRect(cx - 4.2, 58.2, 8.4, 13.6, blue, 0.75, 1.6)
+  c.rect(cx - 1.3, 59.6, 2.6, 0.55, blue, 0.27)
+  c.text('NFC', cx, 66.6, { font: c.f.extrabold, size: 4.8, color: blue, align: 'center' })
+  for (const r of [7, 9.4]) {
+    c.arc(cx, 65, r, 150, 210, blue, 0.7)
+    c.arc(cx, 65, r, -30, 30, blue, 0.7)
+  }
+  c.text('APROXIME', cx, 77.8, { font: c.f.extrabold, size: 7, color: K, align: 'center' })
+  c.text('SEU CELULAR', cx, 81.6, { font: c.f.extrabold, size: 7, color: K, align: 'center' })
+  c.rect(cx - 8, 83.6, 16, 4.6, blue, 2.3)
+  c.text('AQUI', cx, 86.9, { font: c.f.extrabold, size: 6.2, color: WHITE, align: 'center' })
+
+  // divisória tracejada
+  for (let y = 55; y < 95; y += 2.2) c.line(55, y, 55, Math.min(y + 1.2, 95), LIGHT_LINE, 0.35)
+
+  // QR à direita
+  const qx = 77
+  c.text('ou escaneie o', qx, 56.5, { font: c.f.regular, size: 6.5, color: K, align: 'center' })
+  c.text('QR Code', qx, 61, { font: c.f.extrabold, size: 8.5, color: blue, align: 'center' })
+  c.text(T.qrSub, qx, 65, { font: c.f.regular, size: 6.5, color: K, align: 'center' })
+  const qs = 28
+  const qL = qx - qs / 2
+  const qT = 68
+  c.qr(tagUrl(o.baseUrl, t.slug), qL, qT, qs)
+  const o2 = 1.4
+  const L = 4.5
+  const bw = 0.8
+  const corners: [number, number, number, number][] = [
+    [qL - o2, qT - o2, 1, 1],
+    [qL + qs + o2, qT - o2, -1, 1],
+    [qL - o2, qT + qs + o2, 1, -1],
+    [qL + qs + o2, qT + qs + o2, -1, -1],
+  ]
+  for (const [x, y, sx, sy] of corners) c.strokeAt(`M${sx * L},0 L0,0 L0,${sy * L}`, x, y, blue, bw)
+
+  // rodapé em onda
+  c.fillAt('M-3,113 C20,105 45,119 70,111 C83,107 93,105.5 103,107 L103,153 L-3,153 Z', 0, 0, T.escuro)
+  const cols = [17, 50, 83]
+  for (const x of [33.5, 66.5]) c.line(x, 117, x, 139, WHITE, 0.25)
+  // 1: escudo com check
+  c.strokeAt('M0,-6 L5.2,-4 V0.6 C5.2,4 2.6,6 0,7.2 C-2.6,6 -5.2,4 -5.2,0.6 V-4 Z', cols[0], 122.5, WHITE, 0.8)
+  c.strokeAt('M-2.3,0.5 L-0.6,2.3 L2.6,-1.4', cols[0], 122.5, WHITE, 0.9)
+  // 2: quadrado branco com estrela (Google) ou símbolo de aproximação
+  c.rect(cols[1] - 6, 116.5, 12, 12, WHITE, 2.4)
+  if (T.estrelas) c.star(cols[1], 122.8, 4.2, YELLOW)
+  else c.contactless(cols[1] + 0.8, 122.5, 6.5, blue)
+  // 3: balão com coração
+  c.strokeAt('M-1.4,5.6 A5.8,5.8 0 1 0 -4.8,3.2 L-5.6,6.6 Z', cols[2], 122, WHITE, 0.8)
+  c.fillAt('M0,2.3 C-3.4,-0.3 -2.9,-3.4 -1.3,-3.4 C-0.5,-3.4 0,-2.8 0,-2.3 C0,-2.8 0.5,-3.4 1.3,-3.4 C2.9,-3.4 3.4,-0.3 0,2.3 Z', cols[2], 121.8, WHITE)
+  T.rodape.forEach(([a, b], i) => {
+    const size = Math.min(c.fit(a, c.f.extrabold, 5.8, 28), c.fit(b, c.f.extrabold, 5.8, 28))
+    c.text(a, cols[i], 134, { font: c.f.extrabold, size, color: WHITE, align: 'center' })
+    c.text(b, cols[i], 137.8, { font: c.f.extrabold, size, color: WHITE, align: 'center' })
+  })
+  c.text(codeLabel(t), w - 5, 145.3, { font: c.f.regular, size: 4.3, color: WHITE, align: 'right' })
+}
+
 const DRAW: Record<Modelo, (c: Ctx, t: ArtTag, o: ArtOptions) => void> = {
+  'display-premium': displayPremium,
   'display-a6': displayA6,
   'placa-15': placa15,
   'adesivo-80': adesivo80,
