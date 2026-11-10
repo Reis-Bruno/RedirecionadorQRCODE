@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { requireAdmin } from '@/lib/supabase/server'
 import { dateBr, num } from '@/lib/format'
 import { BatchForm } from './BatchForm'
+import { ArtForm } from './ArtForm'
+import { MODELOS } from '@/lib/print-art'
 
 export const metadata = { title: 'Lotes' }
 
@@ -24,6 +26,20 @@ export default async function BatchesPage() {
       <p className="text-xs text-zinc-500">
         Cada placa recebe um código aleatório de 10 caracteres (impossível de adivinhar) e um PIN de 4 dígitos. <b>Não imprima o PIN na placa</b>: ele dá acesso ao painel do lojista. Use a “Folha de PINs” para cartões separados.
       </p>
+      <details className="card text-sm">
+        <summary className="cursor-pointer font-semibold">📐 Especificações para enviar à gráfica</summary>
+        <ul className="mt-3 space-y-1 text-zinc-700">
+          <li>• PDF vetorial, cores <b>CMYK</b>, fontes embutidas, <b>sangria de 3 mm</b> em todos os lados (TrimBox/BleedBox definidos).</li>
+          <li>• <b>Dados variáveis:</b> cada página tem um QR Code diferente — peça impressão “1 cópia de cada página”, não “N cópias do arquivo”.</li>
+          <li>• Gráfica online (Printi, Zap, etc.): envie <b>sem</b> marcas de corte. Gráfica offset tradicional: marque “Marcas de corte”.</li>
+          <li>• Adesivo redondo: a última página é a <b>faca</b> (corte especial) — não imprimir. Cartão NFC: a última página é o <b>verso</b>, igual para todos.</li>
+          <li>• Peça <b>prova de cor e teste de leitura</b> do QR em 1 unidade antes da tiragem. Não aceite redução de tamanho do QR.</li>
+          <li>• Chip NFC: fica atrás da arte, perto do texto “aproxime”. Não funciona sobre metal/ACM sem chip anti-metal.</li>
+          {Object.values(MODELOS).map((m) => (
+            <li key={m.nome}>• <b>{m.nome}</b> — {m.uso}</li>
+          ))}
+        </ul>
+      </details>
       <div className="grid gap-3 md:grid-cols-2">
         {batches.map((b) => {
           const enc = encodeURIComponent(b.batch_name)
@@ -47,6 +63,7 @@ export default async function BatchesPage() {
                 <a href={`/admin/export/${enc}`} className="btn-secondary text-xs">⬇️ CSV</a>
                 <Link href={`/admin/nfc?lote=${enc}`} className="btn-primary text-xs">📡 Gravar NFC em série</Link>
               </div>
+              <ArtForm batch={b.batch_name} />
             </div>
           )
         })}

@@ -2,6 +2,8 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // fontes lidas via fs no gerador de artes precisam ir junto na função
+  outputFileTracingIncludes: { '/admin/arte/[batch]': ['./assets/fonts/**'] },
   async headers() {
     return [
       {
